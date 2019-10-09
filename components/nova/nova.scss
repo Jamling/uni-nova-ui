@@ -1,0 +1,203 @@
+/* nova scss */
+$nova-divider-color: $uni-border-color;
+$nova-border-color: $uni-border-color;
+$nova-rounded: 12rpx;
+
+@font-face {
+    font-family: uniicons;
+    font-weight: normal;
+    font-style: normal;
+    src: url('https://img-cdn-qiniu.dcloud.net.cn/fonts/uni.ttf') format('truetype');
+}
+
+/*1px线条*/
+@mixin divider($left: 0px, $right: 0px, $color: $nova-divider-color, $height: 1px) {
+    position: absolute;
+    z-index: 3;
+    right: $right;
+    bottom: 0;
+    left: $left;
+    height: $height;
+    content: '';
+    //-webkit-transform: scaleY(.5);
+    //-ms-transform: scaleY(.5);
+    transform: scaleY(0.5);
+    background-color: $color;
+}
+
+/*1px 边框*/
+@mixin border-1px($color: $nova-border-color, $radius: '') {
+    content: ' ';
+    width: 200%;
+    height: 200%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    transform-origin: 0 0;
+    transform: scale(0.5);
+    border: 1rpx solid $color;
+    box-sizing: border-box;
+    @if $radius {
+        border-radius: $radius;
+    }
+}
+
+@mixin close() {
+    content: '\00d7'; //'&times;';
+}
+
+@mixin caret($color: $uni-text-color, $size: 8rpx) {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+    border-top: $size dashed;
+    border-right: $size solid transparent;
+    border-left: $size solid transparent;
+}
+
+@mixin text-ellipsis() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin text-arrow($color) {
+    width: 16rpx;
+    height: 16rpx;
+    display: inline-block;
+    border-top: 1rpx solid $color;
+    border-right: 1rpx solid $color;
+    transform: rotate(45deg);
+    transition: transform linear 0.2s;
+}
+
+@mixin line-clamp($lines) {
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+view {
+    box-sizing: border-box;
+    font-size: $uni-font-size-base;
+    line-height: 1;
+}
+
+/*常用*/
+.placeholder {
+    color: $uni-text-color-placeholder;
+}
+
+/*布局*/
+.nova-flex {
+    display: flex;
+}
+
+.nova-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.nova-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.nova-row-center {
+    @extend .nova-row;
+    align-items: center;
+}
+
+.nova-flex-center {
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 列表 */
+.nova-list {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.nova-list-item {
+    @extend .nova-row-center;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    justify-content: space-between;
+    .arrow-right:after {
+        font-family: uniicons;
+        content: '\e583';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        color: $uni-text-color;
+        transform: translateY(-50%);
+    }
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.rounded {
+    border-radius: $nova-rounded;
+}
+
+/* text 对齐 center/right/ */
+
+.text-single-line {
+    @include text-ellipsis();
+}
+
+.text-close {
+    font-size: 36rpx;
+    color: $uni-text-color;
+    &:after {
+        @include close();
+    }
+}
+
+.text-caret {
+    @include caret($uni-text-color);
+}
+
+.text-arrow {
+    @include text-arrow($uni-text-color);
+}
+
+.text-link {
+    color: $uni-color-primary;
+}
+
+/* media */
+.media {
+    .icon {
+        width: 120rpx;
+        height: 90rpx;
+        background-color: $uni-bg-color-grey;
+    }
+    .space {
+        width: 20rpx;
+    }
+    .body {
+        justify-content: space-between;
+        flex: 1;
+    }
+    &--reverse {
+        flex-direction: row-reverse;
+    }
+    &--stretch {
+        align-items: stretch;
+    }
+}
+
+/* dropdown */
