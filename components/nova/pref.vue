@@ -16,6 +16,7 @@
                     </view>
                 </block>
             </slot>
+            <slot name="unit" v-if="unit"><text class="unit">元</text></slot>
             <slot name="arrow"><view v-if="arrow" class="text-arrow"></view></slot>
         </view>
     </view>
@@ -55,6 +56,10 @@ export default {
         },
         value: {
             type: String | Array,
+            default: ''
+        },
+        unit: {
+            type: String,
             default: ''
         },
         placeholder: {

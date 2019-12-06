@@ -1,21 +1,35 @@
 <template>
-    <view>
-        <uni-grid :showBorder="true" :column="3" :square="true">
-            <uni-grid-item><text>tab1</text></uni-grid-item>
-            <uni-grid-item><text>tab2</text></uni-grid-item>
-        </uni-grid>
-        <view class="grid2" style="margin-top: 10px;">
+    <view style="padding: 20rpx;">
+        <view v-for="(item, index) in [1, 2, 3, 4]" :key="index">
+            <uni-grid :showBorder="true" :column="3" :square="false">
+                <uni-grid-item v-for="i in 4" :key="i">
+                    <text>tab{{ i }}</text>
+                </uni-grid-item>
+            </uni-grid>
+        </view>
+        <!--        <view class="grid2" style="margin-top: 10px;">
             <view v-for="i in 4" class="grid2-item" :key="i" :class="['item-' + (i % 3)]">
                 <view class="grid2-item-box"><view class="grid2-item-box-item">aaa</view></view>
             </view>
+        </view> -->
+        <view class="grid3 nova-column" style="margin-top: 10px;">
+            <view>
+                <nova-grid :column="3" :hspace="space" :vspace="space" :ratio="ratio" :borderWidth="2" borderColor="red" :key="key" :highlight="true">
+                    <nova-grid-item v-for="i in count" :key="i" style="padding: 10px;" :itemIndex="i - 1">
+                        <text>grid-item-{{ i }}</text>
+                        <image class="grid-image" src="../../static/logo.png"></image>
+                    </nova-grid-item>
+                </nova-grid>
+            </view>
         </view>
-        <view class="grid3" style="margin-top: 10px;">
-            <nova-grid :column="3" :hspace="0" :vspace="0" :ratio="0" :borderWidth="2" borderColor="red">
-                <nova-grid-item v-for="i in 4" :key="i" style="padding: 10px;">
-                    <text>grid-item-{{ i }}</text>
-                    <image class="grid-image" src="../../static/logo.png"></image>
-                </nova-grid-item>
-            </nova-grid>
+
+        <view>
+            个数
+            <input type="number" :value="count" @input="inputNum" />
+            水平间距
+            <input type="number" :value="space" @input="inputSpace" />
+            高宽比
+            <input type="number" :value="ratio" @input="inputRatio" />
         </view>
     </view>
 </template>
@@ -34,9 +48,35 @@ export default {
         novaGridItem
     },
     data() {
-        return {};
+        return {
+            count: 4,
+            ratio: 0,
+            space: 0,
+            key: 0,
+        };
     },
-    methods: {}
+    methods: {
+        inputNum(e) {
+            let v = parseInt(e.detail.value);
+            if (v > 0) {
+                this.count = v;
+            }
+        },
+        inputSpace(e) {
+            let v = parseInt(e.detail.value);
+            if (v >= 0) {
+                this.space = v;
+                this.key = Math.random()
+            }
+        },
+        inputRatio(e) {
+            let v = parseFloat(e.detail.value);
+            if (v >= 0) {
+                this.ratio = v;
+                this.key = Math.random()
+            }
+        }
+    }
 };
 </script>
 

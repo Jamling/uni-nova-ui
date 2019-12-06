@@ -3,7 +3,7 @@
         <view :id="elId" class="nova-grid">
             <block v-if="datalist && datalist.length > 0">
                 <nova-grid-item v-for="(item, index) in datalist" :key="index">
-                    <view class="grid-item" :class="{ active: choices.has(idx) }">{{ datakey ? item[datakey] : item }}</view>
+                    <view class="grid-item" :class="{ active: choices.has(index) }">{{ datakey ? item[datakey] : item }}</view>
                 </nova-grid-item>
             </block>
             <slot v-else />
@@ -20,7 +20,7 @@ export default {
             type: Number,
             default: 3
         },
-        // 框架粗细，暂不支持自定义
+        // 边框粗细，暂不支持自定义
         borderWidth: {
             type: Number,
             default: 0
@@ -60,8 +60,8 @@ export default {
             type: Boolean,
             default: true
         },
-        // 允许的选择个数 0：无选择；1：单选；-1：多选无限制；2：最多选2个
-        choice: {
+        // 允许的选择个数 0：无选择；1：单选；-1：多选无限制；N：最多选N个
+        choiceMode: {
             type: Number,
             default: 0
         },
@@ -70,7 +70,16 @@ export default {
             type: Number,
             default: -1
         },
-        // 名称
+        // 已选中
+        checkedIndex: {
+            type: Number,
+            default: undefined
+        },
+        checkedIndices: {
+            type: Array,
+            default: () => []
+        },
+        // 名称，当有多个相同性质的grid时有用。
         name: {
             type: String,
             default: ''
@@ -95,6 +104,7 @@ export default {
         const elId = `Uni_${Math.ceil(Math.random() * 10e5).toString(36)}`;
         return {
             index: 0,
+            childrens: [],
             choices: new Set(),
             elId
         };
@@ -102,19 +112,49 @@ export default {
     created() {
         this.index = 0;
         this.childrens = [];
-        this.pIndex = this.pIndex ? this.pIndex++ : 0;
+        if (this.checkedIndex && this.checkedIndex >= 0) {
+            this.choices.add(i);
+        }
+        if (this.checkedIndices && this.checkedIndices.length > 0) {
+            this.checkedIndices.forEach(i => {
+                if (i >= 0) {
+                    this.choices.add(i);
+                }
+            });
+        }
     },
     methods: {
+        setCheckedValue(v) {
+            if (v && this.datalist) {
+                for (let i = 0; i < this.datalist.length; i++) {
+                    if (this.datalist[i] == v) {
+                        this.choices.add(i);
+                    }
+                }
+            }
+        },
+
+        setCheckedValues(vs) {
+            if (vs && vs instanceof Array) {
+                vs.forEach(v => {
+                    this.setCheckedValue(v);
+                });
+            }
+        },
+
+        clearChoice() {
+            this.choices.clear();
+        },
         _click(e) {
             if (e.target === undefined) {
                 e.target = {};
             }
             e.detail.name = this.name;
             e.target.name = this.name;
-            if (this.choice !== 0) {
+            if (this.choiceMode !== 0) {
                 let i = e.detail.index;
                 const set = this.choices;
-                if (this.choice === 1) {
+                if (this.choiceMode === 1) {
                     if (!set.has(i)) {
                         set.clear();
                         set.add(i);
@@ -132,7 +172,7 @@ export default {
                             }
                         }
                         // max count check
-                        if (this.choice > 0 && set.size === this.choice) {
+                        if (this.choiceMode > 0 && set.size === this.choiceMode) {
                             this.$emit('maxcount', e);
                         } else {
                             set.add(i);

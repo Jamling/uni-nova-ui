@@ -2,7 +2,7 @@
     <view class="nova-list">
         <view ref="hidden" class="hidden"></view>
         <nova-pref class="pref" title="标题"></nova-pref>
-        <nova-pref class="pref" title="标题" value="说明"></nova-pref>
+        <nova-pref class="pref" title="标题" value="说明+单位" unit="元"></nova-pref>
         <nova-pref class="pref" title="标题" value="说明+箭头" :arrow="true"></nova-pref>
         <nova-pref class="pref" title="标题" placeholder="placeholder" :arrow="true"></nova-pref>
         <nova-pref class="pref-custom" title="标题" value="自定义样式" :arrow="true"></nova-pref>
@@ -58,6 +58,12 @@
             </view>
             <mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="area.index" @onCancel="onCancel" @onConfirm="onConfirm"></mpvue-city-picker>
         </nova-pref>
+
+        <nova-pref class="pref pref-pick" title="自定义选择" :arrow="true">
+            <picker mode="selector" :range="module" :key="rangeKey" :value="index" @change="_change">
+                <text>{{ module[index][rangeKey] || '请选择' }}</text>
+            </picker>
+        </nova-pref>
     </view>
 </template>
 
@@ -90,7 +96,10 @@ export default {
                 range: cityData,
                 label: '',
                 placeholder: '请选择'
-            }
+            },
+            module: [{ moduleName: 'haha' }],
+            index: 0,
+            rangeKey: 'moduleName'
         };
     },
     methods: {
@@ -119,6 +128,9 @@ export default {
             }
         },
         onCancel(e) {
+            console.log(e);
+        },
+        _change(e) {
             console.log(e);
         }
     },

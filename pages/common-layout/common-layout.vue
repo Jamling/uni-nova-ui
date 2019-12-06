@@ -45,14 +45,20 @@
                 <text>line2</text>
             </media>
         </view>
-        <view class="title"></view>
+        <view class="title">text</view>
         <view class="nova-row-center sample">
             <text class="text-close"></text>
-            <view class="text-close"></view>
             <view class="text-caret"></view>
             <text class="text-single-line" style="width:60rpx">Single line text</text>
             <text class="two-line" style="width:60rpx">Two line text</text>
             <text class="text-arrow" style="width: 20rpx; height: 20rpx;"></text>
+        </view>
+
+        <view class="title">thin border</view>
+        <view class="nova-row-center sample">
+            <text class="use-normal">use-normal</text>
+            <text class="use-transform">use-transform</text>
+            <text class="use-media">use-media</text>
         </view>
     </view>
 </template>
@@ -129,5 +135,25 @@ page {
 }
 .two-line {
     @include line-clamp(2);
+}
+.use-normal {
+    margin: 10rpx;
+    padding: 10rpx;
+    border: 1px solid $uni-color-primary;
+}
+.use-transform {
+    position: relative;
+    margin: 10rpx;
+    padding: 10rpx;
+    &:after {
+        @include border-1px($uni-color-primary);
+    }
+}
+.use-media {
+    margin: 10rpx;
+    padding: 10rpx;
+    border-color: $uni-color-primary;
+    border-style: solid;
+    @include border-width-1px(all);
 }
 </style>

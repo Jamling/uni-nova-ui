@@ -18,7 +18,12 @@
 <script>
 export default {
     name: 'NovaGridItem',
-    props: {},
+    props: {
+        itemIndex: {
+            type: Number,
+            default: undefined
+        }
+    },
     inject: ['grid'],
     data() {
         return {
@@ -39,6 +44,15 @@ export default {
             r1cx: false
         };
     },
+    watch: {
+        itemIndex: function(newVal, oldVal) {
+            if (newVal !== undefined) {
+                this.index = newVal;
+                console.log(oldVal + '->' + newVal);
+                this._calcPos();
+            }
+        }
+    },
     created() {
         this.column = this.grid.column;
         this.highlight = this.grid.highlight;
@@ -46,55 +60,14 @@ export default {
         this.borderWidth = this.grid.borderWidth || 0;
         this.hborder = this.grid.hborder || [1, 1, 1];
         this.vborder = this.grid.vborder || [1, 1, 1];
-        this.index = this.grid.index++;
-        this.ratio = this.grid.ratio;
-
+        if (this.itemIndex !== undefined) {
+            this.index = this.itemIndex;
+        } else {
+            this.index = this.grid.index++;
+        }
         //console.log(this.index);
-        if (this.column > 0) {
-            if (this.index % this.column > 0) {
-                this.marginLeft = uni.upx2px(this.grid.hspace) + 'px';
-            }
-            if (this.index / this.column >= 1) {
-                this.marginTop = uni.upx2px(this.grid.vspace) + 'px';
-            }
-            if (this.ratio > 0) {
-                this.boxStyle.paddingTop = this.ratio * 100 + '%';
-            }
-        }
-        //this.boxStyle.borderColor = this.borderColor;
-        if (this.borderWidth > 0) {
-            let bw = this.borderWidth + 'px';
-
-            // if (this.index % this.column == 0) {
-            //     // hor start
-            //     this.borderStyle.borderLeftWidth = this.hborder[0] ? bw : 0;
-            //     this.borderStyle.borderRightWidth = this.hborder[1] && this.column > 1 ? bw : 0;
-            // } else if (this.index % this.column == this.column - 1) {
-            //     // hor end
-            //     this.borderStyle.borderLeftWidth = this.hborder[0] && this.column > 1 ? bw : 0;
-            //     this.borderStyle.borderRightWidth = this.hborder[2] && this.column > 1 ? bw : 0;
-            // } else if (this.index % this.column > 0) {
-            //     this.borderStyle.borderLeftWidth = this.hborder[1] ? bw : 0;
-            // }
-
-            // if (this.grid.hspace > 0 && this.index / this.column >= 1) {
-            //     this.boxStyle.borderTopWidth = 0;
-            // }
-
-            //this.borderStyle.borderWidth = bw;
-            if (this.borderColor) {
-                this.borderStyle.borderColor = this.borderColor;
-            }
-            if (this.column > 1) {
-                if (this.index % this.column > 0) {
-                    this.c1rx = true;
-                }
-                if (this.index / this.column >= 1) {
-                    this.r1cx = true;
-                }
-            } else {
-            }
-        }
+        this.ratio = this.grid.ratio;
+        this._calcPos();
     },
     // #ifdef H5
     mounted() {
@@ -111,6 +84,62 @@ export default {
     },
     // #endif
     methods: {
+        _calcPos() {
+            //console.log(this.index);
+            if (this.column > 0) {
+                if (this.index % this.column > 0) {
+                    this.marginLeft = uni.upx2px(this.grid.hspace) + 'px';
+                } else {
+                    this.marginLeft = 0;
+                }
+                if (this.index / this.column >= 1) {
+                    this.marginTop = uni.upx2px(this.grid.vspace) + 'px';
+                } else {
+                    this.marginTop = 0;
+                }
+                if (this.ratio > 0) {
+                    this.boxStyle.paddingTop = this.ratio * 100 + '%';
+                }
+            }
+            //this.boxStyle.borderColor = this.borderColor;
+            if (this.borderWidth > 0) {
+                let bw = this.borderWidth + 'px';
+
+                // if (this.index % this.column == 0) {
+                //     // hor start
+                //     this.borderStyle.borderLeftWidth = this.hborder[0] ? bw : 0;
+                //     this.borderStyle.borderRightWidth = this.hborder[1] && this.column > 1 ? bw : 0;
+                // } else if (this.index % this.column == this.column - 1) {
+                //     // hor end
+                //     this.borderStyle.borderLeftWidth = this.hborder[0] && this.column > 1 ? bw : 0;
+                //     this.borderStyle.borderRightWidth = this.hborder[2] && this.column > 1 ? bw : 0;
+                // } else if (this.index % this.column > 0) {
+                //     this.borderStyle.borderLeftWidth = this.hborder[1] ? bw : 0;
+                // }
+
+                // if (this.grid.hspace > 0 && this.index / this.column >= 1) {
+                //     this.boxStyle.borderTopWidth = 0;
+                // }
+
+                //this.borderStyle.borderWidth = bw;
+                if (this.borderColor) {
+                    this.borderStyle.borderColor = this.borderColor;
+                }
+                if (this.column > 1) {
+                    if (this.index % this.column > 0) {
+                        this.c1rx = true;
+                    } else {
+                        this.c1rx = false;
+                    }
+                    if (this.index / this.column >= 1) {
+                        this.r1cx = true;
+                    } else {
+                        this.r1cx = false;
+                    }
+                } else {
+                }
+            }
+        },
         _onClick() {
             // console.log('点击', this.index);
             this.grid._click({ detail: { index: this.index } });
@@ -136,9 +165,11 @@ export default {
         border-style: solid;
         border-width: 1px;
         &-c1rx {
+            //第2-N列
             border-left-width: 0;
         }
         &-r1cx {
+            //第2-N行
             border-top-width: 0;
         }
     }

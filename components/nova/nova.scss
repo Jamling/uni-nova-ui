@@ -42,6 +42,31 @@ $nova-rounded: 12rpx;
     }
 }
 
+/*使用media来实现*/
+@mixin border-width-1px($dir: all) {
+    @if $dir = all {
+        @media screen and (-webkit-min-device-pixel-ratio: 1) {
+            border-width: 1px;
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 2) {
+            border-width: 0.5px;
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 3) {
+            border-width: 0.5px;
+        }
+    } @else {
+        @media screen and (-webkit-min-device-pixel-ratio: 1) {
+            border-#{$dir}-width: 1px;
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 2) {
+            border-#{$dir}-width: 0.5px;
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 3) {
+            border-#{$dir}-width: 0.5px;
+        }
+    }
+}
+
 @mixin close() {
     content: '\00d7'; //'&times;';
 }
@@ -75,7 +100,9 @@ $nova-rounded: 12rpx;
 @mixin line-clamp($lines) {
     word-break: break-all;
     display: -webkit-box;
+    /* autoprefixer: off */
     -webkit-box-orient: vertical;
+    /* autoprefixer: on */
     -webkit-line-clamp: $lines;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -95,6 +122,10 @@ view {
 /*布局*/
 .nova-flex {
     display: flex;
+}
+
+.nova-flex-1 {
+    flex: 1;
 }
 
 .nova-row {
@@ -150,6 +181,14 @@ view {
 
 .rounded {
     border-radius: $nova-rounded;
+}
+
+.square {
+    position: relative;
+    padding-bottom: 100%;
+    //width: 100%;
+    height: 0;
+    overflow: hidden;
 }
 
 /* text 对齐 center/right/ */
