@@ -7,6 +7,7 @@
                 </nova-grid-item>
             </block>
             <slot v-else />
+            <slot name="last"></slot>
         </view>
     </view>
 </template>

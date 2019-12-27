@@ -183,6 +183,7 @@ export default {
         &-ratio {
             position: relative;
             height: 0;
+            padding-top: 100%;
             .grid-item {
                 position: absolute;
                 left: 0;
