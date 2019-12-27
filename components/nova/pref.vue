@@ -6,9 +6,21 @@
             <slot name="text"></slot>
             <slot>
                 <block v-if="type == 'input'">
-                    <input :type="inputType" :placeholder="placeholder" class="pref-input" :style="inputStyle" :value="value" :name="name" @input="_input" />
+                    <input
+                        :type="inputType"
+                        :placeholder="placeholder"
+                        class="pref-input"
+                        :style="inputStyle"
+                        :value="value"
+                        :name="name"
+                        @input="_input"
+                        @blur="_blur"
+                        @focus="_focus"
+                    />
                 </block>
-                <block v-if="type == 'textarea'"><textarea :placeholder="placeholder" class="pref-ta" :style="inputStyle" :value="value" @input="_input"></textarea></block>
+                <block v-if="type == 'textarea'">
+                    <textarea :placeholder="placeholder" class="pref-ta" :style="inputStyle" :value="value" @input="_input" @blur="_blur" @focus="_focus"></textarea>
+                </block>
                 <block v-if="type == 'text'">
                     <view class="pref-input">
                         <text v-if="value" :style="inputStyle">{{ value }}</text>
@@ -16,7 +28,7 @@
                     </view>
                 </block>
             </slot>
-            <slot name="unit" v-if="unit"><text class="unit">元</text></slot>
+            <slot name="unit" v-if="unit"><text class="unit">{{unit}}</text></slot>
             <slot name="arrow"><view v-if="arrow" class="text-arrow"></view></slot>
         </view>
     </view>
@@ -85,6 +97,14 @@ export default {
         _input(e) {
             e.target.name = this.name;
             this.$emit('input', e);
+        },
+        _blur(e) {
+            e.target.name = this.name;
+            this.$emit('blur', e);
+        },
+        _focus(e) {
+            e.target.name = this.name;
+            this.$emit('focus', e);
         }
     }
 };
