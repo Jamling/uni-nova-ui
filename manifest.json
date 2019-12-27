@@ -76,5 +76,22 @@
     },
     "mp-toutiao" : {
         "usingComponents" : true
+    },
+    "h5" : {
+        "devServer" : {
+            //"host": "127.0.0.1",
+            //"port" : 8080,
+            "disableHostCheck" : true,
+            "proxy" : {
+                "/test" : {
+                    "target" : "", // 需要跨域的域名
+                    "changeOrigin" : true,
+                    "secure" : false,
+                    "pathRewrite" : {
+                        "^/test" : ""
+                    }
+                }
+            }
+        }
     }
 }
