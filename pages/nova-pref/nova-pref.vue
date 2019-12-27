@@ -1,27 +1,29 @@
 <template>
     <view class="nova-list">
         <view ref="hidden" class="hidden"></view>
-        <nova-pref class="pref" title="标题"></nova-pref>
-        <nova-pref class="pref" title="标题" value="说明+单位" unit="元"></nova-pref>
+        <nova-pref class="pref" title="最普通"></nova-pref>
+        <nova-pref class="pref" title="很普通" value="说明+单位" unit="元"></nova-pref>
         <nova-pref class="pref" title="标题" value="说明+箭头" :arrow="true"></nova-pref>
         <nova-pref class="pref" title="标题" placeholder="placeholder" :arrow="true"></nova-pref>
         <nova-pref class="pref-custom" title="标题" value="自定义样式" :arrow="true"></nova-pref>
         <nova-pref class="pref-icon" title="带图标" value="线条自定义"><image class="icon" slot="icon" src="../../static/logo.png"></image></nova-pref>
 
+        <nova-pref class="pref" title="姓名(type=input)" placeholder="请输入姓名" type="input" :arrow="true" name="name" :value="name" @input="inputPref"></nova-pref>
+        <nova-pref title="性别(type=picker)" type="picker" name="sex" :arrow="true" :pickerRange="sex" :value="sexIndex" @change="change" placeholder="请选择性别"></nova-pref>
         <nova-pref
-            class="pref"
-            title="文本(设置name和@input来绑定数据)"
-            placeholder="请输入姓名"
-            type="input"
+            title="付款方式(type=picker)"
+            type="picker"
+            name="trade"
             :arrow="true"
-            name="name"
-            :value="name"
-            @input="inputPref"
+            :pickerRange="trades"
+            pickerRangeKey="name"
+            :value="tradeIndex"
+            @change="change"
+            placeholder="请选择付款方式"
         ></nova-pref>
-        <nova-pref type="input" :arrow="true"></nova-pref>
         <nova-pref
             class="pref"
-            title="多行文本"
+            title="备注(type=textarea)"
             placeholder="请输入备注"
             type="textarea"
             name="remark"
@@ -58,12 +60,6 @@
             </view>
             <mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="area.index" @onCancel="onCancel" @onConfirm="onConfirm"></mpvue-city-picker>
         </nova-pref>
-
-        <nova-pref class="pref pref-pick" title="自定义选择" :arrow="true">
-            <picker mode="selector" :range="module" :key="rangeKey" :value="index" @change="_change">
-                <text>{{ module[index][rangeKey] || '请选择' }}</text>
-            </picker>
-        </nova-pref>
     </view>
 </template>
 
@@ -97,9 +93,10 @@ export default {
                 label: '',
                 placeholder: '请选择'
             },
-            module: [{ moduleName: 'haha' }],
-            index: 0,
-            rangeKey: 'moduleName'
+            trades: [{ name: '支付宝', value: 'Alipay' }, { name: '微信', value: 'Wechat' }],
+            tradeIndex: '',
+            sex: ['男', '女', '妖'],
+            sexIndex: 2
         };
     },
     methods: {
@@ -129,6 +126,20 @@ export default {
         },
         onCancel(e) {
             console.log(e);
+        },
+        change(e) {
+            let name = e.target.name;
+            let str = '';
+            if ('trade' == name) {
+                this.tradeIndex = e.detail.value;
+                str = `${e.target.name} = ${this.trades[this.tradeIndex].value}`;
+            } else {
+                this.sexIndex = e.detail.value;
+                str = `${this.sex[this.sexIndex]}`;
+            }
+            uni.showToast({
+                title: str
+            });
         },
         _change(e) {
             console.log(e);

@@ -9,14 +9,9 @@
             "path": "pages/nova-pref/nova-pref",
             "style": {}
         }, {
-            "path": "pages/nova-edit/nova-edit",
-            "style": {}
-        }, {
             "path": "pages/nova-tag/nova-tag",
             "style": {}
-        }
-
-        , {
+        }, {
             "path": "pages/common-layout/common-layout",
             "style": {}
         }, {
