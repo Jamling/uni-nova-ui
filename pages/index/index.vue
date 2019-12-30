@@ -1,9 +1,9 @@
 <template>
-    <view class="content">
-        <nova-pref title="Common" :arrow="true" @click.native="goPage('../common-layout/common-layout')"></nova-pref>
-        <nova-pref title="Preference" :arrow="true" @click.native="goPage('../nova-pref/nova-pref')"></nova-pref>
-        <nova-pref title="Tag" @click.native="goPage('../nova-tag/nova-tag')"></nova-pref>
-        <nova-pref title="Flowlayout" @click.native="goPage('../nova-flowlayout/nova-flowlayout')"></nova-pref>
+    <view class="content nova-list">
+        <nova-pref class="pref" title="常用" :arrow="true" @click.native="goPage('../nova-sample/nova-common')" value="一些常用的样式及布局"></nova-pref>
+        <nova-pref class="pref" title="NovaPref" value="强大的列表项" :arrow="true" @click.native="goPage('../nova-sample/nova-pref')"></nova-pref>
+        <nova-pref class="pref" title="NovaTag" value="标签" :arrow="true" @click.native="goPage('../nova-sample/nova-tag')"></nova-pref>
+        <nova-pref class="pref" title="NovaGrid" value="uGrid加强版" :arrow="true" @click.native="goPage('../nova-sample/nova-grid')"></nova-pref>
     </view>
 </template>
 
@@ -14,13 +14,9 @@ export default {
         novaPref
     },
     data() {
-        return {
-            
-        };
+        return {};
     },
-    onLoad() {
-        
-    },
+    onLoad() {},
     methods: {
         goPage(url) {
             uni.navigateTo({
@@ -31,10 +27,16 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .content {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    .pref {
+        position: relative;
+        &:after {
+            @include divider();
+        }
+    }
 }
 </style>

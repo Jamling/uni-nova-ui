@@ -1,6 +1,7 @@
 <template>
     <view>
         <view :id="elId" class="nova-grid">
+            <slot name="first"></slot>
             <block v-if="datalist && datalist.length > 0">
                 <nova-grid-item v-for="(item, index) in datalist" :key="index">
                     <view class="grid-item" :class="{ active: choices.has(index) }">{{ datakey ? item[datakey] : item }}</view>

@@ -6,19 +6,26 @@
                 "navigationBarTitleText": "uni-app"
             }
         }, {
-            "path": "pages/nova-pref/nova-pref",
-            "style": {}
+            "path": "pages/nova-sample/nova-pref",
+            "style": {
+                "navigationBarTitleText": "Nova-Pref"
+            }
         }, {
-            "path": "pages/nova-tag/nova-tag",
-            "style": {}
+            "path": "pages/nova-sample/nova-tag",
+            "style": {
+                "navigationBarTitleText": "Nova-Tag"
+            }
         }, {
-            "path": "pages/common-layout/common-layout",
-            "style": {}
+            "path": "pages/nova-sample/nova-common",
+            "style": {
+                "navigationBarTitleText": "Common"
+            }
         }, {
-            "path": "pages/uni-grid/uni-grid",
-            "style": {}
+            "path": "pages/nova-sample/nova-grid",
+            "style": {
+                "navigationBarTitleText": "Nova-Grid"
+            }
         }
-
     ],
     "globalStyle": {
         "navigationBarTextStyle": "black",

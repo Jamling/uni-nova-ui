@@ -23,9 +23,6 @@ export default {
         checkable: {
             type: Boolean,
             default: false
-        },
-        value: {
-            
         }
     },
     data() {

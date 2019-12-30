@@ -1,13 +1,13 @@
 <template>
     <view v-if="width" :style="{ width: width, marginTop: marginTop, marginLeft: marginLeft }" class="grid-item-box">
-        <view v-if="borderWidth > 0" class="border" :class="{ 'border-c1rx': c1rx, 'border-r1cx': r1cx }" :style="borderStyle"></view>
+        <view v-if="borderWidth > 0" class="border" :class="{ 'border-c1rx': c1rx, 'border-r1cx': r1cx }" :style="{borderColor: borderColor}"></view>
         <view
             class="wraper"
             :class="{
                 'wraper-ratio': ratio > 0,
                 'wraper-active': highlight
             }"
-            :style="boxStyle"
+            :style="{paddingTop: boxPaddingTop}"
             @click.stop="_onClick"
         >
             <view class="grid-item nova-column nova-flex-center"><slot /></view>
@@ -34,14 +34,13 @@ export default {
             index: 0,
             marginLeft: 0,
             marginTop: 0,
-            boxStyle: {},
             hborder: [1, 1, 1],
             vborder: [1, 1, 1],
             borderWidth: 0,
             borderColor: undefined,
-            borderStyle: {},
             c1rx: false,
-            r1cx: false
+            r1cx: false,
+            boxPaddingTop: '0',
         };
     },
     watch: {
@@ -98,10 +97,9 @@ export default {
                     this.marginTop = 0;
                 }
                 if (this.ratio > 0) {
-                    this.boxStyle.paddingTop = this.ratio * 100 + '%';
+                    this.boxPaddingTop = Math.floor(this.ratio * 100) + '%';
                 }
             }
-            //this.boxStyle.borderColor = this.borderColor;
             if (this.borderWidth > 0) {
                 let bw = this.borderWidth + 'px';
 
@@ -123,7 +121,7 @@ export default {
 
                 //this.borderStyle.borderWidth = bw;
                 if (this.borderColor) {
-                    this.borderStyle.borderColor = this.borderColor;
+                    //this.borderStyle.borderColor = this.borderColor;
                 }
                 if (this.column > 1) {
                     if (this.index % this.column > 0) {
@@ -183,7 +181,7 @@ export default {
         &-ratio {
             position: relative;
             height: 0;
-            padding-top: 100%;
+            //padding-top: 100%;
             .grid-item {
                 position: absolute;
                 left: 0;

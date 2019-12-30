@@ -84,7 +84,7 @@
             "disableHostCheck": true,
             "proxy": {
                 "/test": {
-                    "target": "", // 需要跨域的域名
+                    "target": "http://api.ieclipse.cn", // 需要跨域的域名
                     "changeOrigin": true,
                     "secure": false,
                     "pathRewrite": {

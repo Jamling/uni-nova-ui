@@ -22,7 +22,7 @@
                     <textarea :placeholder="placeholder" class="pref-ta" :style="inputStyle" :value="value" @input="_input" @blur="_blur" @focus="_focus"></textarea>
                 </block>
                 <block v-if="type == 'text'">
-                    <view class="pref-input">
+                    <view class="pref-text">
                         <text v-if="value" :style="inputStyle">{{ value }}</text>
                         <text v-else class="input-placeholder placeholder">{{ placeholder }}</text>
                     </view>
@@ -173,6 +173,16 @@ export default {
         justify-content: flex-end;
         padding-left: 10rpx;
         .pref-input {
+            text-align: right;
+            font-size: 28rpx;
+        }
+        .pref-text {
+            width: 100%;
+            text-align: right;
+            font-size: 28rpx;
+        }
+        .pref-picker {
+            width: 100%;
             text-align: right;
             font-size: 28rpx;
         }
