@@ -4,6 +4,8 @@
         <nova-pref class="pref" title="NovaPref" value="强大的列表项" :arrow="true" @click.native="goPage('../nova-sample/nova-pref')"></nova-pref>
         <nova-pref class="pref" title="NovaTag" value="标签" :arrow="true" @click.native="goPage('../nova-sample/nova-tag')"></nova-pref>
         <nova-pref class="pref" title="NovaGrid" value="uGrid加强版" :arrow="true" @click.native="goPage('../nova-sample/nova-grid')"></nova-pref>
+        <nova-pref class="pref" title="NovaOpenApi" value="常用的open api封装" :arrow="true" @click.native="goPage('../nova-sample/nova-openapi')"></nova-pref>
+        
     </view>
 </template>
 

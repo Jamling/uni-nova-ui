@@ -25,6 +25,9 @@
             "style": {
                 "navigationBarTitleText": "Nova-Grid"
             }
+        }, {
+            "path": "pages/nova-sample/nova-openapi",
+            "style": {}
         }
     ],
     "globalStyle": {
@@ -32,5 +35,24 @@
         "navigationBarTitleText": "uni-app",
         "navigationBarBackgroundColor": "#F8F8F8",
         "backgroundColor": "#F8F8F8"
+    },
+    "easycom": {
+        "autoscan": true,
+        "custom": {
+            //"uni-(.*)": "@/components/uni-$1.vue",
+            "nova-(.*)": "@/components/nova/$1.vue"
+        }
+    },
+    "condition": {
+        "current": 0,
+        "list": [{
+                "name": "首页",
+                "path": "pages/index/index"
+            },
+            {
+                "name": "Nova-Pref",
+                "path": "pages/nova-sample/nova-pref"
+            }
+        ]
     }
 }

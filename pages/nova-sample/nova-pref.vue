@@ -60,6 +60,7 @@
             </view>
             <mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="area.index" @onCancel="onCancel" @onConfirm="onConfirm"></mpvue-city-picker>
         </nova-pref>
+        <nova-location title="选择位置" placeholder="请选择地址" action="choose" :loc="loc" :value="loc.name" @change="chooseLocation" @error="chooseLocationError"></nova-location>
     </view>
 </template>
 
@@ -96,7 +97,10 @@ export default {
             trades: [{ name: '支付宝', value: 'Alipay' }, { name: '微信', value: 'Wechat' }],
             tradeIndex: '',
             sex: ['男', '女', '妖'],
-            sexIndex: 2
+            sexIndex: 2,
+            loc: {
+                
+            }
         };
     },
     methods: {
@@ -143,6 +147,13 @@ export default {
         },
         _change(e) {
             console.log(e);
+        },
+        chooseLocation(res) {
+            console.log(res);
+            this.loc = res
+        },
+        chooseLocationError(err) {
+            console.error(err)
         }
     },
     onBackPress() {

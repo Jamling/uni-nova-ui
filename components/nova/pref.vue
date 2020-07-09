@@ -43,6 +43,17 @@
 </template>
 
 <script>
+/**
+ * 列表首选项组件
+ * @description 列表首选项组件
+ * @tutorial https://github.com/Jamling/uni-nova-ui
+ * @property {String} title 标题
+ * @property {Boolean} arrow = [true|false] 是否显示向右的箭头
+ * @event {Function} input 输入事件
+ * @event {Function} change picker change事件
+ * @example <nova-pref title="我是标题"></nova-pref>
+ */
+
 export default {
     name: 'nova-pref',
     props: {
@@ -138,6 +149,9 @@ export default {
             this.$emit('focus', e);
         },
         _getPickerLabel() {
+            if (this.pickerMode == 'time' || this.pickerMode == 'date') {
+                return this.value;
+            }
             let v = parseInt(this.value);
             if (isNaN(v)) {
                 v = -1;

@@ -32,7 +32,7 @@
                 <nova-grid
                     :column="column"
                     :hspace="space"
-                    :vspace="space"
+                    :vspace="30"
                     :ratio="ratio"
                     :borderWidth="borderWidth"
                     borderColor="red"
@@ -44,9 +44,18 @@
                     @maxcount="maxcount"
                     @click="click"
                 >
-                    <nova-grid-item v-for="(item, i) in gridData" :key="i" :itemIndex="i" :class="{ checked: checkedIndices.indexOf(i) >= 0 }" style="padding: 0;">
-                        <text>{{ item }}</text>
-                        <image class="grid-image" src="../../static/logo.png"></image>
+                    <nova-grid-item
+                        v-for="(item, i) in gridData"
+                        :key="i"
+                        :itemIndex="i"
+                        :class="{ checked: checkedIndices.indexOf(i) >= 0 }"
+                        style="padding: 0;"
+                    >
+                        <view class="grid-item">
+                            <text v-if="i % 3 == 1">{{ item }}-{{ item }}</text>
+                            <text v-else>{{item}}</text>
+                            <!-- <image class="grid-image" src="../../static/logo.png"></image> -->
+                        </view>
                     </nova-grid-item>
                     <nova-grid-item :itemIndex="count" slot="last" @click.native.stop="addCount">
                         <view class="nova-flex nova-flex-center" style="width: 100%; height: 100%;">添加图片</view>
@@ -102,12 +111,12 @@ export default {
     },
     data() {
         return {
-            count: 4,
+            count: 9,
             gridData: [],
             borderWidth: 1,
-            column: 3,
+            column: 6,
             ratio: 0.5,
-            space: 0,
+            space: 40,
             mutexIndex: -1,
             choiceMode: 0,
             checkedIndices: [],
@@ -227,6 +236,10 @@ export default {
 .grid-image {
     width: 50%;
     height: 50%;
+}
+.grid-item {
+    height: 40rpx;
+    overflow: hidden;
 }
 .checked {
     background-color: #808080;
